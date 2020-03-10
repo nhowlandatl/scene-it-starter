@@ -1,5 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
 
+    function saveToWatchlist(imdbID) {
+        
+    } 
+
     function renderMovies(movieData) {
 
         var moviesHTML = movieData.map(function (currentMovie) {
@@ -7,20 +11,24 @@ document.addEventListener('DOMContentLoaded', function() {
         return `
             <div class="card">
                 <img class="card-img-top img-fluid" src="${currentMovie.Poster}" alt="Card image cap">
-                <div class="card-block">
-                    <h4 class="card-title d-inline mr-3">${currentMovie.Title}</h4>
-                    <p class="card-text d-inline bg-secondary text-white" style="text-align: right">${currentMovie.Year}</p>
-                    <br>
-                    <button type="button" class="btn btn-primary ml-1 mb-1 mt-3" style="text-align: left">Add!</button>
+                <div class="card-block text-center">
+                    <h4 class="card-title">${currentMovie.Title}</h4>
+
+                    <p class="card-text bg-secondary text-white mx-auto" style="width: 3rem">${currentMovie.Year}</p>
+                    
+                    <button onclick="saveToWatchlist('${currentMovie.imdbID}')" type="button" class="btn btn-primary ml-1 mb-1 mt-1">
+                        Add!
+                    </button>
                 </div>
             </div>
-       
         `
         });
-
-            console.log(moviesHTML)
             return moviesHTML.join('');
         }
-        document.getElementById('card').innerHTML = renderMovies(movieData);  
+    
+        document.getElementById('search-form').addEventListener('submit', function(e){
+            e.preventDefault();
+            document.getElementById('card').innerHTML = renderMovies(movieData); 
+        });
     }
 );
